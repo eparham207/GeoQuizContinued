@@ -30,18 +30,24 @@ class MainActivity : AppCompatActivity() {
 
         binding.trueButton.setOnClickListener{
             checkAnswer(true)
+            setButtonState(false)
         }
         binding.FalseButton.setOnClickListener{
             checkAnswer(false)
+            setButtonState(false)
         }
 
         binding.nextButton.setOnClickListener{
             currentIndex = (currentIndex + 1) % questionBank.size
             updateQuestion()
+            setButtonState(true)
         }
+
         binding.questionTextview.setOnClickListener{
             currentIndex = (currentIndex + 1) % questionBank.size
             updateQuestion()
+            setButtonState(true)
+
         }
         binding.previousButton.setOnClickListener{
             currentIndex = if (currentIndex > 0) {
@@ -50,6 +56,7 @@ class MainActivity : AppCompatActivity() {
                 questionBank.size - 1 // Set currentIndex to the last index if it's already 0
             }
             updateQuestion()
+            setButtonState(true)
         }
 
         updateQuestion()
@@ -69,6 +76,12 @@ class MainActivity : AppCompatActivity() {
 
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT)
             .show()
+    }
+
+    private fun setButtonState(enabled:Boolean) {
+        binding.trueButton.isEnabled = enabled
+        binding.FalseButton.isEnabled = enabled
+
     }
 
     override fun onStart() {
